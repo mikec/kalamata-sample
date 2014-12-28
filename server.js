@@ -1,16 +1,22 @@
 var express = require('express');
 
-var knexConfig = require('../knexfile');
+var knexConfig = require('./knexfile');
 var knex = require('knex')(knexConfig.development);
 var bookshelf = require('bookshelf')(knex);
 
 var app = module.exports = express();
 var api = require('kalamata')(app);
 
-app.set('bookshelf', bookshelf);
+var Thing = bookshelf.Model.extend({
+    tableName: 'things'
+});
 
-var User = require('./models/User');
-var Thing = require('./models/Thing');
+var User = bookshelf.Model.extend({
+    tableName: 'users',
+    things: function() {
+        return this.hasMany(Thing);
+    }
+});
 
 api.expose(User);
 api.expose(Thing);

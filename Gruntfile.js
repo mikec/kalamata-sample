@@ -16,7 +16,7 @@ module.exports = function(grunt) {
         express: {
             server: {
                 options: {
-                    script: 'server/main.js',
+                    script: 'server.js',
                     port: 9999
                 }
             }
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 
         watch: {
             server: {
-                files: ['server/**'],
+                files: ['server.js'],
                 tasks: [ 'express']
             }
         }
