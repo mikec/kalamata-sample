@@ -2,6 +2,15 @@ var express = require('express');
 
 var knexConfig = require('./knexfile');
 var knex = require('knex')(knexConfig.development);
+knex.migrate.rollback().then(() => {
+  return knex.migrate.latest()
+}).then(()=> {
+  return knex.seed.run()
+}).then(()=> {
+  console.log('DB created');
+})
+
+
 var bookshelf = require('bookshelf')(knex);
 
 var app = module.exports = express();
@@ -29,7 +38,7 @@ function execThingsQuery(req, res, model) {
     model.where({'deleted': false});
 }
 
-var port = Number(process.env.PORT || 9999);
+var port = Number(process.env.PORT || 3000);
 app.listen(port, function() {
     console.log('Server listening on port ' + port);
 });

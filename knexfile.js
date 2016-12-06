@@ -1,12 +1,11 @@
 module.exports = {
 
   development: {
-    client: 'pg',
+    client: 'sqlite3',
     connection: {
-      host: 'localhost',
-      database: 'kalamata_sample',
-      user:     'kalamata_sample_user'
+      filename: ':memory:'
     },
+    debug: true,
     seeds: {
       directory: './db/seeds'
     },
